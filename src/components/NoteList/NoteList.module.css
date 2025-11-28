@@ -1,43 +1,57 @@
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 .listItem {
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.listItem:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  justify-content: space-between;
+  min-height: 180px;
 }
 
 .title {
-  margin: 0;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
-  word-wrap: break-word;
+  margin: 0 0 8px 0;
+  color: #212529;
 }
 
 .content {
   margin: 0;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.5;
   flex-grow: 1;
-  word-wrap: break-word;
+  font-size: 14px;
+  color: #495057;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.button {
+  align-self: flex-end;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #bb2d3b;
 }
 
 .footer {
@@ -45,35 +59,36 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid #e0e0e0;
 }
 
 .tag {
-  padding: 4px 12px;
-  background-color: #e3f2fd;
-  color: #1976d2;
-  border-radius: 12px;
+  display: inline-block;
+  padding: 4px 8px;
   font-size: 12px;
-  font-weight: 500;
+  color: #0d6efd;
+  background-color: #e7f1ff;
+  border: 1px solid #b6d4fe;
+  border-radius: 12px;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.button {
-  padding: 6px 16px;
-  background-color: #dc3545;
-  color: white;
+.link {
+  align-self: flex-end;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #0d6efd; /* синій колір */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s ease;
 }
 
-.button:hover {
-  background-color: #c82333;
-}
-
-.button:active {
-  background-color: #bd2130;
+.link:hover {
+  background-color: #0b5ed7;
 }
