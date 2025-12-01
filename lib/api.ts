@@ -21,10 +21,12 @@ export const fetchNoteById = async (id: string): Promise<Note> => {
   return response.data;
 };
 
-export const createNote = async (note: {
+export interface CreateNotePayload {
   title: string;
   content: string;
-}): Promise<Note> => {
+}
+
+export const createNote = async (note: CreateNotePayload): Promise<Note> => {
   const response = await axiosInstance.post<Note>('', note);
   return response.data;
 };
