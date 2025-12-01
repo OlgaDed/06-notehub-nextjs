@@ -1,20 +1,29 @@
-// components/NoteList/NoteList.tsx
+import Link from 'next/link';
+import { Note } from '@/types/note';
+import NoteItem from '@/components/NoteItem/NoteItem';
+import css from './NoteList.module.css';
 
-import { Note } from '@/lib/api';
-import NoteItem from '../NoteItem/NoteItem';
-
-type Props = {
+interface NoteListProps {
   notes: Note[];
-};
+}
 
-const NoteList = ({ notes }: Props) => {
+export default function NoteList({ notes }: NoteListProps) {
+  if (notes.length === 0) {
+    return <p className={css.empty}>No notes found</p>;
+  }
+
   return (
-    <ul>
+    <ul className={css.list}>
       {notes.map(note => (
-        <NoteItem key={note.id} item={note} />
+        <li key={note.id} className={css.item}>
+          <NoteItem note={note} />
+          <div className={css.actions}>
+            <Link href={`/notes/${note.id}`} className={css.viewLink}>
+              View details
+            </Link>
+          </div>
+        </li>
       ))}
     </ul>
   );
-};
-
-export default NoteList;
+}

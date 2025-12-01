@@ -1,28 +1,22 @@
-// app/notes/page.tsx
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import { fetchNotes } from '@/lib/api';
+import NotesClient from './Notes.client';
 
-'use client';
+export default async function NotesPage() {
+  const queryClient = new QueryClient();
 
-import { useState } from 'react';
-import NoteList from '@/components/NoteList/NoteList';
-import { getNotes, Note } from '@/lib/api';
-
-const Notes = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
-
-  const handleClick = async () => {
-    const response = await getNotes();
-    if (response?.notes) {
-      setNotes(response.notes);
-    }
-  };
+  await queryClient.prefetchQuery({
+    queryKey: ['notes'],
+    queryFn: fetchNotes,
+  });
 
   return (
-    <section>
-      <h1>Notes List</h1>
-      <button onClick={handleClick}>Get my notes</button>
-      {notes.length > 0 && <NoteList notes={notes} />}
-    </section>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotesClient />
+    </HydrationBoundary>
   );
-};
-
-export default Notes;
+}
