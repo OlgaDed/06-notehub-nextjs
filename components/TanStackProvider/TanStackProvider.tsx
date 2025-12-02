@@ -14,6 +14,7 @@ export default function TanStackProvider({
         defaultOptions: {
           queries: {
             staleTime: 60 * 1000,
+            refetchOnWindowFocus: false,
           },
         },
       })

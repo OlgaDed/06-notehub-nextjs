@@ -34,7 +34,11 @@ export default function NoteDetailsClient() {
         </div>
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>
-          {new Date(note.createdAt).toLocaleDateString()}
+          {new Date(note.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
         </p>
       </div>
     </div>
