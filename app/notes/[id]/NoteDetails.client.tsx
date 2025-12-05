@@ -1,40 +1,61 @@
+// app/notes/[id]/NoteDetails.client.tsx
 'use client';
 
+import { useState } from 'react';
 import {
-  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
+  HydrationBoundary,
   useQuery,
 } from '@tanstack/react-query';
-import { useState } from 'react';
+import type { DehydratedState } from '@tanstack/react-query';
 import { fetchNoteById } from '../../../lib/api';
 import styles from './NoteDetails.module.css';
 
-export default function NoteDetailsClient({ id, dehydratedState }: any) {
+interface Props {
+  id: string;
+  dehydratedState: DehydratedState | null;
+}
+
+export default function NoteDetailsClient({ id, dehydratedState }: Props) {
   const [qc] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={qc}>
       <HydrationBoundary state={dehydratedState}>
-        <Details id={id} />
+        <NoteDetailsContent id={id} />
       </HydrationBoundary>
     </QueryClientProvider>
   );
 }
 
-function Details({ id }: { id: string }) {
-  const { data } = useQuery({
+function NoteDetailsContent({ id }: { id: string }) {
+  const {
+    data: note,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
   });
 
-  if (!data) return <p>Loading...</p>;
+  if (isLoading) return <div className={styles.loading}>Loading...</div>;
+  if (isError || !note)
+    return <div className={styles.error}>Could not fetch note details.</div>;
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>{data.title}</h2>
-      <p className={styles.text}>{data.content}</p>
-      <span className={styles.date}>{data.createdAt}</span>
-    </div>
+    <article className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>{note.title}</h1>
+      </header>
+
+      <section className={styles.content}>
+        <p>{note.content}</p>
+      </section>
+
+      <footer className={styles.footer}>
+        <span className={styles.date}>{note.createdAt ?? 'Unknown date'}</span>
+      </footer>
+    </article>
   );
 }
