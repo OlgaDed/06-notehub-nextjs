@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import css from './Header.module.css';
+import styles from './Header.module.css';
 
 export default function Header() {
   return (
-    <header className={css.header}>
-      <Link href="/" aria-label="Home" className={css.logo}>
+    <header className={styles.header}>
+      <Link href="/" className={styles.logo}>
         NoteHub
       </Link>
-      <nav aria-label="Main Navigation">
-        <ul className={css.navigation}>
+
+      <nav>
+        <ul className={styles.nav}>
           <li>
             <Link href="/">Home</Link>
           </li>

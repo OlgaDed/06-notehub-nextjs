@@ -1,36 +1,23 @@
 import axios from 'axios';
-import { Note } from '@/types/note';
 
-const API_URL = 'https://notehub-api.onrender.com/notes';
-const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
+const api = axios.create({
+  baseURL: 'https://goit-notehub.herokuapp.com',
   headers: {
-    Authorization: `Bearer ${TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
   },
 });
 
-export const fetchNotes = async (): Promise<Note[]> => {
-  const response = await axiosInstance.get<Note[]>('');
-  return response.data;
+export const fetchNotes = async () => {
+  const { data } = await api.get('/notes');
+  return data;
 };
 
-export const fetchNoteById = async (id: string): Promise<Note> => {
-  const response = await axiosInstance.get<Note>(`/${id}`);
-  return response.data;
+export const fetchNoteById = async (id: string) => {
+  const { data } = await api.get(`/notes/${id}`);
+  return data;
 };
 
-export interface CreateNotePayload {
-  title: string;
-  content: string;
-}
-
-export const createNote = async (note: CreateNotePayload): Promise<Note> => {
-  const response = await axiosInstance.post<Note>('', note);
-  return response.data;
-};
-
-export const deleteNote = async (id: string): Promise<void> => {
-  await axiosInstance.delete(`/${id}`);
+export const createNote = async (payload: any) => {
+  const { data } = await api.post('/notes', payload);
+  return data;
 };
