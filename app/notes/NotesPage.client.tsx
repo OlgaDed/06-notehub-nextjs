@@ -2,32 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
-// * 1. TanStack Query Imports
-import {
-  useQuery,
-  useMutation,
-  type DehydratedState,
-} from '@tanstack/react-query';
-
-// * 2. API & Types Imports
 import { fetchNotes, deleteNote } from '@/lib/api';
 import type { Note } from '@/types/note';
-
-// * 3. Component Imports
-
 import NoteItem from '../../components/NoteItem/NoteItem';
-
-// * 4. Styles Import
 import styles from './NotesPage.module.css';
 
-interface NotesPageClientProps {
-  dehydratedState: DehydratedState;
-}
-
-export default function NotesPageClient({
-  dehydratedState,
-}: NotesPageClientProps) {
+export default function NotesPageClient() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const {
@@ -39,9 +21,6 @@ export default function NotesPageClient({
   } = useQuery<Note[], Error>({
     queryKey: ['notes', searchQuery],
     queryFn: () => fetchNotes(searchQuery),
-
-    initialData: dehydratedState.queries?.find(q => q.queryKey[0] === 'notes')
-      ?.state.data as Note[] | undefined,
   });
 
   const deleteMutation = useMutation({
@@ -78,7 +57,6 @@ export default function NotesPageClient({
       <div className={styles.container}>
         <h1 className={styles.header}>Notes</h1>
         <div className={styles.controls}>
-          {/* Search Input */}
           <input
             type="text"
             placeholder="Search notes..."
@@ -86,7 +64,6 @@ export default function NotesPageClient({
             onChange={e => setSearchQuery(e.target.value)}
             className={styles.searchInput}
           />
-          {/* Create Button */}
           <Link href="/notes/new" className={styles.createButton}>
             Create note +
           </Link>
@@ -102,7 +79,6 @@ export default function NotesPageClient({
     <div className={styles.container}>
       <h1 className={styles.header}>Notes</h1>
       <div className={styles.controls}>
-        {/* Search Input */}
         <input
           type="text"
           placeholder="Search notes..."
@@ -110,7 +86,6 @@ export default function NotesPageClient({
           onChange={e => setSearchQuery(e.target.value)}
           className={styles.searchInput}
         />
-        {/* Create Button */}
         <Link href="/notes/new" className={styles.createButton}>
           Create note +
         </Link>

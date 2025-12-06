@@ -1,6 +1,7 @@
 import './globals.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import ReactQueryProvider from '../lib/react-query';
 
 export const metadata = {
   title: 'NoteHub',
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <ReactQueryProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ReactQueryProvider>
       </body>
     </html>
   );
