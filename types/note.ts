@@ -2,8 +2,9 @@ export interface Note {
   id: string;
   title: string;
   content: string;
+  priority: 'low' | 'medium' | 'high';
+  category: 'personal' | 'work' | 'education';
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface NoteInput {
