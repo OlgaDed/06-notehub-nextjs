@@ -34,7 +34,13 @@ export default function NotesClient() {
         throw new Error(`HTTP ${res.status}: ${text}`);
       }
 
-      return res.json();
+      const json = await res.json();
+
+      if (!Array.isArray(json)) {
+        throw new Error('API returned non-array data');
+      }
+
+      return json;
     },
   });
 
@@ -44,10 +50,10 @@ export default function NotesClient() {
       <p>❌ Could not fetch the list of notes. {(error as Error).message}</p>
     );
 
-  const filtered = data.filter(
+  const filtered = (data || []).filter(
     n =>
-      n.title.toLowerCase().includes(search.toLowerCase()) ||
-      n.content.toLowerCase().includes(search.toLowerCase())
+      n.title?.toLowerCase().includes(search.toLowerCase()) ||
+      n.content?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
