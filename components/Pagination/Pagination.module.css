@@ -15,6 +15,11 @@
   min-width: 36px;
   height: 36px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  user-select: none;
 }
 
 .pagination li a {
@@ -44,4 +49,9 @@
 .active a {
   color: #fff !important;
   font-weight: 500;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }

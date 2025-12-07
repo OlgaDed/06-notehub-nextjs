@@ -2,13 +2,12 @@ export interface Note {
   id: string;
   title: string;
   content: string;
+  category: string;
   createdAt: string;
-
-  category?: string;
 }
 
-export interface NotePayload {
+export interface NoteCreatePayload {
   title: string;
   content: string;
-  category?: string;
+  category: string;
 }

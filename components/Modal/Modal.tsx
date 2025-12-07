@@ -1,11 +1,33 @@
+// components/Modal/Modal.tsx
 'use client';
 
-import styles from './Modal.module.css';
+import React from 'react';
+import css from './Modal.module.css';
 
-export default function Modal({ children, onClose }: any) {
+type Props = {
+  children: React.ReactNode;
+  onClose: () => void;
+};
+
+export default function Modal({ children, onClose }: Props) {
   return (
-    <div className={styles.backdrop} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+    <div className={css.backdrop} onClick={onClose}>
+      <div className={css.modal} onClick={e => e.stopPropagation()}>
+        <button
+          aria-label="Close"
+          style={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            border: 'none',
+            background: 'transparent',
+            fontSize: 20,
+            cursor: 'pointer',
+          }}
+          onClick={onClose}
+        >
+          ×
+        </button>
         {children}
       </div>
     </div>

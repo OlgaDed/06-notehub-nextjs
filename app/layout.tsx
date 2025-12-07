@@ -1,11 +1,11 @@
 import './globals.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import ReactQueryProvider from '../lib/react-query';
+import TanStackProvider from '../components/TanStackProvider/TanStackProvider';
 
 export const metadata = {
   title: 'NoteHub',
-  description: 'NoteHub Next.js App',
+  description: 'NoteHub – note manager built with Next.js',
 };
 
 export default function RootLayout({
@@ -16,11 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ReactQueryProvider>
+        <TanStackProvider>
           <Header />
-          {children}
+          <main style={{ flex: 1 }}>{children}</main>
           <Footer />
-        </ReactQueryProvider>
+        </TanStackProvider>
       </body>
     </html>
   );
