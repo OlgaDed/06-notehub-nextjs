@@ -7,6 +7,7 @@ import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Link from 'next/link';
 import css from './NotesPage.module.css';
+import type { Note } from '@/types/note';
 
 export default function NotesClient() {
   const [search, setSearch] = useState('');
@@ -15,7 +16,7 @@ export default function NotesClient() {
     data = [],
     isLoading,
     error,
-  } = useQuery({
+  } = useQuery<Note[]>({
     queryKey: ['notes'],
     queryFn: fetchNotes,
   });
