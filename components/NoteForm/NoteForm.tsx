@@ -8,7 +8,11 @@ import css from './NoteForm.module.css';
 export default function NoteForm({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('Personal');
+
+  // 🔥 ВИПРАВЛЕНИЙ СТЕЙТ CATEGORY
+  const [category, setCategory] = useState<'personal' | 'work' | 'education'>(
+    'personal'
+  );
 
   const qc = useQueryClient();
 
@@ -49,15 +53,17 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
 
       <div className={css.formGroup}>
         <label>Category</label>
+
         <select
           className={css.select}
           value={category}
-          onChange={e => setCategory(e.target.value)}
+          onChange={e =>
+            setCategory(e.target.value as 'personal' | 'work' | 'education')
+          }
         >
-          <option>Personal</option>
-          <option>Work</option>
-          <option>Shopping</option>
-          <option>Todo</option>
+          <option value="personal">Personal</option>
+          <option value="work">Work</option>
+          <option value="education">Education</option>
         </select>
       </div>
 
