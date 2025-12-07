@@ -26,3 +26,5 @@ export async function createNote(payload: NoteCreatePayload): Promise<Note> {
 export async function deleteNote(id: string): Promise<void> {
   await api.delete(`/notes/${id}`);
 }
+
+console.log('TOKEN:', process.env.NEXT_PUBLIC_NOTEHUB_TOKEN);
