@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { fetchNotes } from '@/lib/api';
 import { useState } from 'react';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
@@ -18,11 +17,32 @@ export default function NotesClient() {
     error,
   } = useQuery<Note[]>({
     queryKey: ['notes'],
-    queryFn: fetchNotes,
+    queryFn: async () => {
+      const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+      if (!token) {
+        throw new Error('NEXT_PUBLIC_NOTEHUB_TOKEN is missing');
+      }
+
+      const res = await fetch('https://notehub-public.goit.study/api/notes', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`HTTP ${res.status}: ${text}`);
+      }
+
+      return res.json();
+    },
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
-  if (error) return <p>Something went wrong.</p>;
+  if (error)
+    return (
+      <p>❌ Could not fetch the list of notes. {(error as Error).message}</p>
+    );
 
   const filtered = data.filter(
     n =>
