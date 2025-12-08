@@ -7,8 +7,8 @@ export default async function NotesPage() {
   const qc = new QueryClient();
 
   await qc.prefetchQuery({
-    queryKey: ['notes'],
-    queryFn: fetchNotes,
+    queryKey: ['notes', 1, ''], // page=1, search=''
+    queryFn: () => fetchNotes(1, ''),
   });
 
   const dehydrated = dehydrate(qc);

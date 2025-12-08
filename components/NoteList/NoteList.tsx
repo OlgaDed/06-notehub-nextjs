@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Note } from '@/types/note';
 import css from './NoteList.module.css';
@@ -20,17 +22,18 @@ export default function NoteList({ notes }: { notes: Note[] }) {
         <li key={note.id} className={css.listItem}>
           <h3 className={css.title}>{note.title}</h3>
           <p className={css.content}>{note.content}</p>
-
           <div className={css.footer}>
-            <span className={css.tag}>{note.category}</span>
+            <span className={css.tag}>{note.tag}</span>
 
             <Link href={`/notes/${note.id}`} className={css.link}>
               View details
             </Link>
-
             <button
               className={css.button}
-              onClick={() => mutation.mutate(note.id)}
+              onClick={() => {
+                console.log('Deleting note ID:', note.id);
+                mutation.mutate(note.id);
+              }}
               disabled={mutation.isPending}
             >
               {mutation.isPending ? '...' : 'Delete'}

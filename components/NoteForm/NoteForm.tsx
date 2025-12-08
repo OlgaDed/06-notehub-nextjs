@@ -9,10 +9,7 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  // 🔥 ВИПРАВЛЕНИЙ СТЕЙТ CATEGORY
-  const [category, setCategory] = useState<'personal' | 'work' | 'education'>(
-    'personal'
-  );
+  const [tag, setTag] = useState('Todo');
 
   const qc = useQueryClient();
 
@@ -22,11 +19,15 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
       qc.invalidateQueries({ queryKey: ['notes'] });
       onClose();
     },
+    onError: error => {
+      console.error('Failed to create note:', error);
+      alert('Failed to create note. Check console for details.');
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ title, content, category });
+    mutation.mutate({ title, content, tag });
   };
 
   return (
@@ -52,18 +53,17 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
       </div>
 
       <div className={css.formGroup}>
-        <label>Category</label>
-
+        <label>Tag</label>
         <select
           className={css.select}
-          value={category}
-          onChange={e =>
-            setCategory(e.target.value as 'personal' | 'work' | 'education')
-          }
+          value={tag}
+          onChange={e => setTag(e.target.value)}
         >
-          <option value="personal">Personal</option>
-          <option value="work">Work</option>
-          <option value="education">Education</option>
+          <option value="Todo">Todo</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Meeting">Meeting</option>
+          <option value="Shopping">Shopping</option>
         </select>
       </div>
 
@@ -75,7 +75,6 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
         >
           {mutation.isPending ? 'Saving...' : 'Create'}
         </button>
-
         <button className={css.cancelButton} type="button" onClick={onClose}>
           Cancel
         </button>

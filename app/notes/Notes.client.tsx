@@ -25,7 +25,6 @@ export default function NotesClient() {
 
   return (
     <div className={css.app}>
-      {/* 🔵 ПАГІНАЦІЯ ЗВЕРХУ */}
       <Pagination page={page} totalPages={data.totalPages} onChange={setPage} />
 
       <div className={css.toolbar}>
@@ -38,7 +37,6 @@ export default function NotesClient() {
 
       <NoteList notes={data.notes} />
 
-      {/* 🔵 МОДАЛКА ДЛЯ СТВОРЕННЯ НОТАТКИ */}
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           <NoteForm onClose={() => setIsOpen(false)} />

@@ -11,6 +11,12 @@ export default async function NoteDetailsPage({ params }: Props) {
   const qc = new QueryClient();
   const id = params.id;
 
+  console.log('📝 Note Details Page - ID:', id);
+
+  if (!id || id === 'undefined') {
+    return <p>Invalid note ID</p>;
+  }
+
   await qc.prefetchQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
