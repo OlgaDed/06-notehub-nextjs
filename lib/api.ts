@@ -34,7 +34,7 @@ export async function fetchNotes(page = 1, search = '') {
 
   const data = await res.json();
 
-  console.log('📦 Notes data sample:', data.notes?.[0]);
+  console.log('Notes data sample:', data.notes?.[0]);
 
   return {
     notes: data.notes || [],
@@ -60,7 +60,7 @@ export async function fetchNoteById(id: string) {
 export async function createNote(payload: {
   title: string;
   content: string;
-  tag: string; // ← змінено з category на tag
+  tag: string;
 }) {
   const res = await fetch(`${BASE_URL}/notes`, {
     method: 'POST',

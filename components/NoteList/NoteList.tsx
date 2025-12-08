@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Note } from '@/types/note';
 import css from './NoteList.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -25,15 +24,19 @@ export default function NoteList({ notes }: { notes: Note[] }) {
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
 
-            <Link href={`/notes/${note.id}`} className={css.link}>
+            <span
+              className={css.link}
+              style={{
+                opacity: 0.5,
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+              }}
+            >
               View details
-            </Link>
+            </span>
             <button
               className={css.button}
-              onClick={() => {
-                console.log('Deleting note ID:', note.id);
-                mutation.mutate(note.id);
-              }}
+              onClick={() => mutation.mutate(note.id)}
               disabled={mutation.isPending}
             >
               {mutation.isPending ? '...' : 'Delete'}
