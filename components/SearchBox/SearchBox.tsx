@@ -1,15 +1,18 @@
-// components/SearchBox/SearchBox.tsx
 'use client';
 
 import css from './SearchBox.module.css';
 
-type Props = {
+interface SearchBoxProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-};
+}
 
-export default function SearchBox({ value, onChange, placeholder }: Props) {
+export default function SearchBox({
+  value,
+  onChange,
+  placeholder,
+}: SearchBoxProps) {
   return (
     <input
       className={css.input}

@@ -4,14 +4,12 @@ import { fetchNoteById } from '@/lib/api';
 import NoteDetailsClient from './NoteDetails.client';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function NoteDetailsPage({ params }: Props) {
   const qc = new QueryClient();
-  const id = params.id;
-
-  console.log('📝 Note Details Page - ID:', id);
+  const { id } = await params;
 
   if (!id || id === 'undefined') {
     return <p>Invalid note ID</p>;

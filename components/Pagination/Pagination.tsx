@@ -1,21 +1,24 @@
-// components/Pagination/Pagination.tsx
 'use client';
 
 import css from './Pagination.module.css';
 
-type Props = {
+interface PaginationProps {
   page: number;
   totalPages: number;
   onChange: (page: number) => void;
-};
+}
 
-export default function Pagination({ page, totalPages, onChange }: Props) {
+export default function Pagination({
+  page,
+  totalPages,
+  onChange,
+}: PaginationProps) {
   const pages = Array.from({ length: totalPages }).map((_, i) => i + 1);
 
   return (
     <ul className={css.pagination}>
       <li
-        className={page === 1 ? `${css['disabled']}` : ''}
+        className={page === 1 ? css.disabled : ''}
         onClick={() => page > 1 && onChange(page - 1)}
         role="button"
       >
@@ -25,7 +28,7 @@ export default function Pagination({ page, totalPages, onChange }: Props) {
       {pages.map(p => (
         <li
           key={p}
-          className={p === page ? `${css.active}` : ''}
+          className={p === page ? css.active : ''}
           onClick={() => onChange(p)}
           role="button"
         >
@@ -34,7 +37,7 @@ export default function Pagination({ page, totalPages, onChange }: Props) {
       ))}
 
       <li
-        className={page === totalPages ? `${css['disabled']}` : ''}
+        className={page === totalPages ? css.disabled : ''}
         onClick={() => page < totalPages && onChange(page + 1)}
         role="button"
       >

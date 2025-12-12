@@ -5,10 +5,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '@/lib/api';
 import css from './NoteForm.module.css';
 
-export default function NoteForm({ onClose }: { onClose: () => void }) {
+interface NoteFormProps {
+  onClose: () => void;
+}
+
+export default function NoteForm({ onClose }: NoteFormProps) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
   const [tag, setTag] = useState('Todo');
 
   const qc = useQueryClient();
@@ -48,7 +51,6 @@ export default function NoteForm({ onClose }: { onClose: () => void }) {
           className={css.textarea}
           value={content}
           onChange={e => setContent(e.target.value)}
-          required
         />
       </div>
 

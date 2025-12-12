@@ -14,9 +14,9 @@
     "@tanstack/react-query-next-experimental": "^5.91.0",
     "axios": "^1.13.2",
     "formik": "^2.4.9",
-    "next": "^16.0.7",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "yup": "^1.7.1"
   },
   "devDependencies": {

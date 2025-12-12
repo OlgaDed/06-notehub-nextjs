@@ -1,16 +1,34 @@
-// components/Modal/Modal.tsx
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import css from './Modal.module.css';
 
-type Props = {
+interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
-};
+}
 
-export default function Modal({ children, onClose }: Props) {
-  return (
+export default function Modal({ children, onClose }: ModalProps) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  return createPortal(
     <div className={css.backdrop} onClick={onClose}>
       <div className={css.modal} onClick={e => e.stopPropagation()}>
         <button
@@ -30,6 +48,7 @@ export default function Modal({ children, onClose }: Props) {
         </button>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

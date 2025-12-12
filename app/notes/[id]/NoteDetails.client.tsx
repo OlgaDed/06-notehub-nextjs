@@ -4,7 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import css from './NoteDetails.module.css';
 
-export default function NoteDetailsClient({ id }: { id: string }) {
+interface NoteDetailsClientProps {
+  id: string;
+}
+
+export default function NoteDetailsClient({ id }: NoteDetailsClientProps) {
   const {
     data: note,
     isLoading,
@@ -12,6 +16,7 @@ export default function NoteDetailsClient({ id }: { id: string }) {
   } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
@@ -25,7 +30,6 @@ export default function NoteDetailsClient({ id }: { id: string }) {
         </div>
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>{new Date(note.createdAt).toLocaleString()}</p>
-
         <span className={css.tag}>{note.tag}</span>
       </div>
     </div>
