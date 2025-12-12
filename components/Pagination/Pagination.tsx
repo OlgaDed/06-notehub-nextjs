@@ -1,5 +1,6 @@
 'use client';
 
+import ReactPaginate from 'react-paginate';
 import css from './Pagination.module.css';
 
 interface PaginationProps {
@@ -13,36 +14,27 @@ export default function Pagination({
   totalPages,
   onChange,
 }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }).map((_, i) => i + 1);
+  if (totalPages <= 1) return null;
 
   return (
-    <ul className={css.pagination}>
-      <li
-        className={page === 1 ? css.disabled : ''}
-        onClick={() => page > 1 && onChange(page - 1)}
-        role="button"
-      >
-        <a>←</a>
-      </li>
-
-      {pages.map(p => (
-        <li
-          key={p}
-          className={p === page ? css.active : ''}
-          onClick={() => onChange(p)}
-          role="button"
-        >
-          <a>{p}</a>
-        </li>
-      ))}
-
-      <li
-        className={page === totalPages ? css.disabled : ''}
-        onClick={() => page < totalPages && onChange(page + 1)}
-        role="button"
-      >
-        <a>→</a>
-      </li>
-    </ul>
+    <ReactPaginate
+      pageCount={totalPages}
+      pageRangeDisplayed={3}
+      marginPagesDisplayed={1}
+      onPageChange={selectedItem => onChange(selectedItem.selected + 1)}
+      forcePage={page - 1}
+      containerClassName={css.pagination}
+      pageLinkClassName=""
+      activeClassName={css.active}
+      previousClassName=""
+      nextClassName=""
+      previousLinkClassName=""
+      nextLinkClassName=""
+      disabledClassName={css.disabled}
+      breakClassName=""
+      breakLinkClassName=""
+      previousLabel="←"
+      nextLabel="→"
+    />
   );
 }
